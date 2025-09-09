@@ -4,7 +4,6 @@
 import os
 import requests
 import re
-import sys
 # Code here - Import BeautifulSoup library
 from bs4 import BeautifulSoup
 # Code ends here
@@ -12,11 +11,11 @@ from bs4 import BeautifulSoup
 # function to get the html source text of the medium article
 def get_page():
 	global url
-	
+
 	# Code here - Ask the user to input "Enter url of a medium article: " and collect it in url
-	url = input("Enter url of medium article: ").strip()
+	url = input("Enter url of a medium article: ")
 	# Code ends here
-	
+
 	# handling possible error
 	if not re.match(r'https?://medium.com/',url):
 		print('Please enter a valid website, or make sure it is a medium article')
@@ -33,7 +32,7 @@ def get_page():
 # function to remove all the html tags and replace some with specific strings
 def clean(text):
     rep = {"<br>": "\n", "<br/>": "\n", "<li>":  "\n"}
-    rep = dict((re.escape(k), v) for k, v in rep.items()) 
+    rep = dict((re.escape(k), v) for k, v in rep.items())
     pattern = re.compile("|".join(rep.keys()))
     text = pattern.sub(lambda m: rep[re.escape(m.group(0))], text)
     text = re.sub('\<(.*?)\>', '', text)
@@ -55,9 +54,9 @@ def save_file(text):
 	name = url.split("/")[-1]
 	print(name)
 	fname = f'scraped_articles/{name}.txt'
-	
+
 	# Code here - write a file using with (2 lines)
-	with open(fname, "w") as f:
+	with open(fname, 'w') as f:
 		f.write(text)
 	# Code ends here
 
